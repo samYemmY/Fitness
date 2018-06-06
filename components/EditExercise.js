@@ -34,6 +34,13 @@ const styles = {
 
 class EditExercise extends React.Component
 {
+  state = {
+    weight: null,
+    reps: null,
+    sets: null,
+    item: null
+  }
+
   static navigationOptions = ({navigation: {state}}) => ({
         title: "Details",
         headerStyle: {
@@ -42,10 +49,21 @@ class EditExercise extends React.Component
         headerTintColor: "#fff"
   })
 
+  componentWillMount()
+  {
+    const {store} = this.props
+    const {item} = this.props.navigation.state.params
+    if(!store[item])
+    {
+      const {weight, reps, sets} = this.props
+      this.props.changeEditExercise("store",{...store, [item]:{weight, reps, sets, selectedExercise: item}})
+    }
+  }
+
   saveValues()
   {
-    const {weight, reps, sets, note, selectedExercise, store} = this.props
-    this.props.changeEditExercise("store",{...store,[selectedExercise]:{weight,reps,sets,note}})
+    const {weight, reps, sets, selectedExercise, store} = this.props
+    this.props.changeEditExercise("store",{...store,[item]:{weight,reps,sets}})
   }
 
   deleteExercise()
@@ -65,12 +83,11 @@ class EditExercise extends React.Component
 
   render()
   {
-    //let {item, reps, weight, sets, notes, icon} = this.props.navigation.state.params
-    let item = "S-Z-Stange Langhantel Frei"; let reps=10; let weight=25; let sets=3; let icon=Images.biceps
+    let {selectedExercise, reps, weight, sets} = this.props.store[this.props.navigation.state.params.item]
     return(
       <ScrollView style={{ padding: 20, backgroundColor: "white" }}>
         <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", borderColor: "gray", paddingLeft: 10, paddingRight: 10 }}>
-          <View style={{ flex: 4 }}><Text style={{ fontSize: 25, fontWeight: "bold"}}>{item}</Text></View>
+          <View style={{ flex: 4 }}><Text style={{ fontSize: 25, fontWeight: "bold"}}>{selex}</Text></View>
         </View>
 
         <View style={{ marginTop: 40 }}>
@@ -78,7 +95,7 @@ class EditExercise extends React.Component
           <View style={{ flexDirection: "row", width: "100%", height: 110 }}>
             <View style={{ flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
               <View style={{ flex: 1, alignItems: "center" }}><Image source={Images.weight} style={{ width: 40, height: 40 }} /></View>
-              <View style={{ flex: 3, alignItems: "center" }}><TextInput onChangeText={} style={{ fontSize: 21, borderBottomWidth: 0.5, width: 175 }} placeholder={"50"} /></View>
+              <View style={{ flex: 3, alignItems: "center" }}><TextInput value={this.props.weight.toString()} keyboardType={"numeric"} onChangeText={(weight) => this.props.changeEditExercise("weight", weight)} style={{ fontSize: 21, borderBottomWidth: 0.5, width: 175 }} placeholder={"50"} /></View>
             </View>
             <View style={{ flex: 1, justifyContent: "space-around", alignItems: "center" }}>
               <TouchableImage source={Images.plus} width={25} height={25} style={styles.shadow}/>
@@ -92,7 +109,7 @@ class EditExercise extends React.Component
           <View style={{ flexDirection: "row", width: "100%", height: 110 }}>
             <View style={{ flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
               <View style={{ flex: 1, alignItems: "center" }}><Image source={Images.reps} style={{ width: 40, height: 40 }} /></View>
-              <View style={{ flex: 3, alignItems: "center" }}><TextInput style={{ fontSize: 21, borderBottomWidth: 0.5, width: 175 }} placeholder={"10"} /></View>
+              <View style={{ flex: 3, alignItems: "center" }}><TextInput value={this.props.reps.toString()} keyboardType={"numeric"} onChangeText={(reps) => this.props.changeEditExercise("reps", reps)} style={{ fontSize: 21, borderBottomWidth: 0.5, width: 175 }} placeholder={"10"} /></View>
             </View>
             <View style={{ flex: 1, justifyContent: "space-around", alignItems: "center" }}>
               <TouchableImage source={Images.plus} width={25} height={25} style={ styles.shadow }/>
@@ -106,7 +123,7 @@ class EditExercise extends React.Component
           <View style={{ flexDirection: "row", width: "100%", height: 110 }}>
             <View style={{ flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
               <View style={{ flex: 1, alignItems: "center" }}><Image source={Images.sets} style={{ width: 50, height: 50 }} /></View>
-              <View style={{ flex: 3, alignItems: "center"}}><TextInput style={{ fontSize: 21, borderBottomWidth: 0.5, width: 175 }} placeholder={"3"} /></View>
+              <View style={{ flex: 3, alignItems: "center"}}><TextInput value={this.props.sets.toString()} keyboardType={"numeric"} onChangeText={(sets) => this.props.changeEditExercise("sets", sets)} style={{ fontSize: 21, borderBottomWidth: 0.5, width: 175 }} placeholder={"3"} /></View>
             </View>
             <View style={{ flex: 1, justifyContent: "space-around", alignItems: "center" }}>
               <TouchableImage source={Images.plus} width={25} height={25} style={ styles.shadow }/>
@@ -117,7 +134,7 @@ class EditExercise extends React.Component
 
         <View style={{ alignItems: "center", width: "100%", marginTop: 25 }}>
           <View style={{ width: "75%", height: 120 }}>
-            <Button text={"Speichern"} backgroundColor={"black"} color={"white"} padding={15} borderRadius={10} fontSize={19} fontWeight={"bold"}  style={ styles.shadow } onPress={() => {}}/>
+            <Button text={"Speichern"} onPress={this.saveValues} backgroundColor={"black"} color={"white"} padding={15} borderRadius={10} fontSize={19} fontWeight={"bold"}  style={ styles.shadow }/>
           </View>
         </View>
       </ScrollView>
@@ -125,8 +142,8 @@ class EditExercise extends React.Component
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-
-})
+const mapStateToProps = (state, ownProps) => {
+  return {store: state.editExercise.store}
+}
 
 export default connect(mapStateToProps,{changeEditExercise})(EditExercise)

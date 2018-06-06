@@ -1,10 +1,9 @@
 import {CHANGE_EDIT_EXERCISE} from "../types";
 
 const initialState = {
-  notes: "",
-  weight: "",
-  reps: "",
-  sets: "",
+  weight: 10,
+  reps: 10,
+  sets: 3,
   completed: false,
   selectedExercise: null,
   selectedRegion: null,

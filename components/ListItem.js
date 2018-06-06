@@ -23,8 +23,8 @@ class ListItem extends React.Component
 
   handleClick()
   {
-    const {item, weight, reps, sets, notes, navigation} = this.props
-    navigation.navigate("EditExercise", { item, weight, reps, sets, notes, icon: Images[this.props.regionKey] })
+    const {item, navigation} = this.props
+    navigation.navigate("EditExercise", {item})
   }
 
   render(){
