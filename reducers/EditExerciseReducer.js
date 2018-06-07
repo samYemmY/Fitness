@@ -5,7 +5,7 @@ const initialState = {
   reps: 10,
   sets: 3,
   completed: false,
-  selectedExercise: null,
+  selectedExercise: "Bizeps Curls",
   selectedRegion: null,
   store: {}
 }

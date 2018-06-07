@@ -1,17 +1,26 @@
-import {SELECT_REGION, ADD_EXERCISE, CHANGE_EXERCISES, CLEAR_EXERCISE_PROGRESS, TOGGLE_EXERCISE_CLICK, RESET_CLICKED_EXERCISES} from "../types"
+import {
+  SELECT_REGION,
+  ADD_EXERCISE,
+  CHANGE_EXERCISES,
+  CLEAR_EXERCISE_PROGRESS,
+  TOGGLE_EXERCISE_CLICK,
+  RESET_CLICKED_EXERCISES,
+  ADD_NEW_TIME,
+  INCREMENT_TOTAL_WORKOUT_COUNT
+} from "../types"
 
 export const selectRegion = (name) => ({
-  type: SELECT_REGION,
+  type:    SELECT_REGION,
   payload: name
 })
 
 export const addExercise = (region, exercise) => ({
-  type: ADD_EXERCISE,
+  type:    ADD_EXERCISE,
   payload: {region, exercise}
 })
 
-export const changeExerciseProp = (prop,value) => ({
-  type: CHANGE_EXERCISES,
+export const changeExerciseProp = (prop, value) => ({
+  type:    CHANGE_EXERCISES,
   payload: {prop, value}
 })
 
@@ -20,10 +29,20 @@ export const clearExerciseProgress = () => ({
 })
 
 export const toggleExerciseClick = (exercise, section) => ({
-  type: TOGGLE_EXERCISE_CLICK,
+  type:    TOGGLE_EXERCISE_CLICK,
   payload: {exercise, section}
 })
 
 export const resetClickedExercises = () => ({
   type: RESET_CLICKED_EXERCISES
+})
+
+export const addNewTime = (time) => ({
+  type:    ADD_NEW_TIME,
+  payload: time
+})
+
+export const incrementTotalWorkoutCount = (selectedRegions) => ({
+  type: INCREMENT_TOTAL_WORKOUT_COUNT,
+  payload: selectedRegions
 })
