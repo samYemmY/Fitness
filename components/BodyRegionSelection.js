@@ -153,16 +153,16 @@ class BodyRegionSelection extends React.Component {
                                style={{justifyContent: "center", alignItems: "center"}}/>
         </View>
 
-        <View style={{width: "75%", height: 110, justifyContent: "space-between", marginTop: 60}}>
+        <View style={{width: "75%", height: 100, justifyContent: "space-between", marginTop: 60}}>
           <View style={{flexDirection: "row", justifyContent: "space-between"}}><Text
-            style={{fontSize: 19, fontFamily: "Lato-Light"}}>Total Workouts</Text> <Text
-            style={{fontSize: 19}}>{this.props.stack[selectedRegions[0]].totalCount}</Text></View>
+            style={{fontSize: 17}}>{this.props.lrc.BodyRegionSelection.totalWorkouts}</Text> <Text
+            style={{fontSize: 17, fontFamily: "Lato-Bold", letterSpacing: 1}}>{this.props.stack[selectedRegions[0]].totalCount}</Text></View>
           <View style={{flexDirection: "row", justifyContent: "space-between"}}><Text
-            style={{fontSize: 19, fontFamily: "Lato-Light"}}>Average Time</Text> <Text
-            style={{fontSize: 19}}>{this.props.averageTime}</Text></View>
+            style={{fontSize: 17}}>{this.props.lrc.BodyRegionSelection.lastWorkoutTime}</Text> <Text
+            style={{fontSize: 17, fontFamily: "Lato-Bold", letterSpacing: 1}}>{this.props.stopwatchTime}</Text></View>
           <View style={{flexDirection: "row", justifyContent: "space-between"}}><Text
-            style={{fontSize: 19, fontFamily: "Lato-Light"}}>Last Time</Text> <Text
-            style={{fontSize: 19}}>{this.props.stopwatchTime}</Text></View>
+            style={{fontSize: 17}}>{this.props.lrc.BodyRegionSelection.averageTime}</Text> <Text
+            style={{fontSize: 17, fontFamily: "Lato-Bold", letterSpacing: 1}}>{this.props.averageTime}</Text></View>
         </View>
 
         <View style={{width: "75%", height: 120, marginTop: 50}}>

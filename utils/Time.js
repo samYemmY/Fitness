@@ -10,7 +10,7 @@ class Time {
   static secondsToTimestamp(time)
   {
     let rest    = null
-    let hours   = ~(time / 3600)
+    let hours   = ~~(time / 3600)
     rest        = time % 3600
     let seconds = rest % 60
     let minutes = (rest - seconds) / 60
@@ -19,7 +19,8 @@ class Time {
 
   static getAverageTimeInSeconds(arrayOfSeconds)
   {
-    return arrayOfSeconds.reduce((accumulator, currentVal) => accumulator + currentVal) / arrayOfSeconds.length
+    const average = arrayOfSeconds.reduce((accumulator, currentVal) => accumulator + currentVal) / arrayOfSeconds.length
+    return average
   }
 
   static fillTwoDigits(digitString)

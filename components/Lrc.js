@@ -7,7 +7,9 @@ export default {
     deleteExercise: "Delete Exercise",
     cancel: "Cancel",
     BodyRegionSelection: {
-      averageTime: "Average Time",
+      totalWorkouts: "Total Workouts",
+      averageTime: "Average Workout Duration",
+      lastWorkoutTime: "Last Workout Duration",
       startWorkout: "Start Workout",
       title: "Select Body Region",
       chest: "chest",
@@ -16,12 +18,7 @@ export default {
       biceps: "biceps",
       shoulder: "shoulder",
       belly: "belly",
-      legs: "legs",
-      region: {
-        backBiceps: "Back-Biceps",
-        chestTriceps: "Chest-Triceps",
-        shoulderBellyLegs: "Shoulder-Belly-Legs"
-      }
+      legs: "legs"
     },
     ExerciseList : {
       sectionFooterText: "Add Exercise"
@@ -40,7 +37,9 @@ export default {
     deleteExercise: "Übung Löschen",
     cancel: "Abbrechen",
     BodyRegionSelection: {
-      averageTime: "Trainingszeit (mittel)",
+      totalWorkouts: "Gesamte Trainingsanzahl",
+      averageTime: "Durchschnittsdauer",
+      lastWorkoutTime: "Letzte Trainingsdauer",
       startWorkout: "Training Starten",
       title: "Region Auswählen",
       chest: "Brust",
@@ -49,12 +48,7 @@ export default {
       biceps: "Bizeps",
       shoulder: "Schulter",
       belly: "Bauch",
-      legs: "Beine",
-      region: {
-        backBiceps: "Rücken-Bizeps",
-        chestTriceps: "Brust-Trizeps",
-        shoulderBellyLegs: "Schulter-Bauch-Beine"
-      }
+      legs: "Beine"
     },
     ExerciseList : {
       sectionFooterText: "Übung Hinzufügen"
