@@ -1,5 +1,6 @@
 export default {
   en: {
+    add: "Add",
     save: "Save",
     back: "Back",
     next: "Next",
@@ -7,10 +8,10 @@ export default {
     deleteExercise: "Delete Exercise",
     cancel: "Cancel",
     BodyRegionSelection: {
-      totalWorkouts: "Total Workouts",
-      averageTime: "Average Workout Duration",
-      lastWorkoutTime: "Last Workout Duration",
-      startWorkout: "Start Workout",
+      labelTotalWorkouts: "Total Workouts",
+      labelAverageTime: "Average Workout Duration",
+      labelLastWorkoutTime: "Last Workout Duration",
+      labelStartWorkout: "Start Workout",
       title: "Select Body Region",
       chest: "chest",
       triceps: "triceps",
@@ -30,6 +31,7 @@ export default {
     }
   },
   ger: {
+    add: "Hinzufügen",
     save: "Speichern",
     back: "Zurück",
     next: "Vor",
@@ -37,10 +39,10 @@ export default {
     deleteExercise: "Übung Löschen",
     cancel: "Abbrechen",
     BodyRegionSelection: {
-      totalWorkouts: "Gesamte Trainingsanzahl",
-      averageTime: "Durchschnittsdauer",
-      lastWorkoutTime: "Letzte Trainingsdauer",
-      startWorkout: "Training Starten",
+      labelTotalWorkouts: "Gesamte Trainingsanzahl",
+      labelAverageTime: "Durchschnittsdauer",
+      labelLastWorkoutTime: "Letzte Trainingsdauer",
+      labelStartWorkout: "Training Starten",
       title: "Region Auswählen",
       chest: "Brust",
       triceps: "Trizeps",

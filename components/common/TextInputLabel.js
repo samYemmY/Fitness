@@ -18,11 +18,27 @@ const styles = {
   }
 }
 
-const TextInputLabel = ({label, placeholder, onChangeText, secureTextEntry, value, style}) => (
-  <View style={styles.view}>
-    <Text style={styles.text}>{label}</Text>
-    <TextInput value={value} placeholder={placeholder} onChangeText={onChangeText} style={styles.textInput} secureTextEntry={secureTextEntry}/>
-  </View>
-)
+class TextInputLabel extends React.Component
+{
+
+  renderText()
+  {
+    if(this.props.label)
+    {
+      return <Text style={styles.text}>{this.props.label}</Text>
+    }
+  }
+
+  render()
+  {
+    const {value, placeholder, onChangeText, secureTextEntry} = this.props
+    return (
+      <View style={styles.view}>
+        {this.renderText()}
+        <TextInput value={value} onEnterText={()=>console.log("entered")} placeholder={placeholder} onChangeText={onChangeText} style={styles.textInput} secureTextEntry={secureTextEntry}/>
+      </View>
+    )
+  }
+}
 
 export {TextInputLabel}

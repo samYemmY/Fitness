@@ -73,9 +73,15 @@ class ExerciseList extends React.Component {
     if (state.params && state.params.title)
     {
       return {
-        title: state.params.title
+        title: state.params.title,
+        headerRight: <Button onPress={() => state.params.navigation.navigate("ModalAddExercise", {})} text={state.params.labelAdd} height={40} fontWeight={"bold"} color="white" />
       }
     }
+  }
+
+  test()
+  {
+    console.log("test")
   }
 
   componentWillReceiveProps(props)
@@ -87,25 +93,12 @@ class ExerciseList extends React.Component {
 
   componentWillMount()
   {
+    console.log("mounting list")
     this.getTitle()
     const sections = this.formatSections()
     this.setState({
       sections
     })
-    this.initStore()
-  }
-
-  initStore()
-  {
-    let store = {}
-    for (const region in this.props.stack)
-    {
-      for (const exercise in this.props.stack[region].data)
-      {
-        store[exercise] = {weight: 10, reps: 10, sets: 3}
-      }
-    }
-    this.props.changeEditExercise("store", store)
   }
 
   componentWillUnmount()
@@ -143,13 +136,6 @@ class ExerciseList extends React.Component {
       weight       = target.weight
       sets         = target.sets
       notes        = target.notes
-    }
-    else
-    {
-      weight = "10 kg"
-      reps   = "x10"
-      sets   = "3 Sets"
-      notes  = ""
     }
     const clicked = this.props.stack[section.regionKey].data[item].clicked
     return <ListItem navigation={this.props.navigation} item={item} clicked={clicked} weight={weight} reps={reps}
@@ -237,9 +223,9 @@ class ExerciseList extends React.Component {
   finishExercise()
   {
     this.setState({stopwatchStart: false})
-    this.props.navigation.navigate("BodyRegionSelection")
-    this.props.addNewTime(this.props.stopwatchTime)
+    this.props.addNewTime(this.props.stopwatchTime, this.props.selectedRegions)
     this.props.incrementTotalWorkoutCount(this.props.selectedRegions)
+    this.props.navigation.navigate("BodyRegionSelection")
   }
 
   renderFooter()
@@ -247,16 +233,16 @@ class ExerciseList extends React.Component {
     return (
       <View style={{
         backgroundColor: "black",
-        justifyContent:  "space-around",
         alignItems:      "center",
         width:           "100%",
-        height:          50,
+        padding: 10,
+        height:          70,
         flexDirection:   "row",
         borderTopWidth:  0.5,
         borderColor:     "gray"
       }}>
         <View style={{flex: 1}}>
-          <Button text={"Reset"} color={"white"} fontWeight={"bold"} onPress={this.resetState.bind(this)}/>
+          <Button text={"Reset"} color={"white"} fontWeight={"bold"} borderWidth={1} borderRadius={20} borderColor={"white"} onPress={this.resetState.bind(this)}/>
         </View>
         <View style={{flex: 1}}>
           <View style={{paddingLeft: 15}}>
@@ -267,7 +253,7 @@ class ExerciseList extends React.Component {
           </View>
         </View>
         <View style={{flex: 1}}>
-          <Button text={"Finish"} color={"white"} fontWeight={"bold"} onPress={this.finishExercise.bind(this)}/>
+          <Button text={"Finish"} color={"white"} borderWidth={1} borderRadius={20} borderColor={"lime"} fontSize={13} fontWeight={"bold"} onPress={this.finishExercise.bind(this)}/>
         </View>
       </View>
     )
@@ -284,8 +270,6 @@ class ExerciseList extends React.Component {
                      sections={this.state.sections}
                      ItemSeparatorComponent={this.renderSeparator}
         />
-        <ModalAddExercise visible={this.state.modalVisible} onCloseModal={this.onCloseModal.bind(this)}
-                          animationType={"fade"} transparent={true}/>
         {this.renderFooter()}
       </View>
     )
@@ -297,6 +281,7 @@ const mapStateToProps = (state, ownProps) => ({
   lrc:             state.language.lrc,
   selectedRegions: state.exercises.selectedRegions,
   stack:           state.exercises.stack,
+  modalVisible:    state.exercises.modalVisible,
   store:           state.editExercise.store,
   stopwatchTime:   state.exercises.stopwatchTime
 })

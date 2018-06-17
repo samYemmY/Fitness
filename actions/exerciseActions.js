@@ -19,10 +19,14 @@ export const addExercise = (region, exercise) => ({
   payload: {region, exercise}
 })
 
-export const changeExerciseProp = (prop, value) => ({
-  type:    CHANGE_EXERCISES,
-  payload: {prop, value}
-})
+export const changeExerciseProp = (prop, value) => {
+  return(
+    {
+      type:    CHANGE_EXERCISES,
+      payload: {prop, value}
+    }
+    )
+}
 
 export const clearExerciseProgress = () => ({
   type: CLEAR_EXERCISE_PROGRESS
@@ -37,9 +41,9 @@ export const resetClickedExercises = () => ({
   type: RESET_CLICKED_EXERCISES
 })
 
-export const addNewTime = (time) => ({
+export const addNewTime = (time, selectedRegions) => ({
   type:    ADD_NEW_TIME,
-  payload: time
+  payload: {time, selectedRegions}
 })
 
 export const incrementTotalWorkoutCount = (selectedRegions) => ({

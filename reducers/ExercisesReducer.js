@@ -10,6 +10,15 @@ import {
   INCREMENT_TOTAL_WORKOUT_COUNT
 } from "../types"
 import {Time} from "../utils"
+import * as _ from "lodash"
+
+const regionProps = {
+  progress:    0,
+  totalWorkouts:  0,
+  averageTime: "00:00:00",
+  lastTime:    "00:00:00",
+  timeStore:   []
+}
 
 const initialState = {
   stack: {
@@ -19,8 +28,7 @@ const initialState = {
         "Schrägbank":  {clicked: false},
         "Bankdrücken": {clicked: false}
       },
-      progress:   0,
-      totalCount: 0
+      ...regionProps
     },
     "triceps": {
       data:       {
@@ -28,8 +36,7 @@ const initialState = {
         "Reverse Hantelcurls": {clicked: false},
         "Dips":                {clicked: false}
       },
-      progress:   0,
-      totalCount: 0
+      ...regionProps
     },
     "back":     {
       data:        {
@@ -39,8 +46,7 @@ const initialState = {
         "Kreuzheben":       {clicked: false},
         "Reverse Sit-Ups":  {clicked: false}
       },
-      progress: 0,
-      totalCount:  0
+      ...regionProps
     },
     "biceps":   {
       data:        {
@@ -48,16 +54,15 @@ const initialState = {
         "Hammercurls": {clicked: false},
         "Hantelcurls": {clicked: false}
       },
-      progress: 0,
-      totalCount:  0
+      ...regionProps
     },
     "shoulder": {
       data:        {
         "Scheibenheben": {clicked: false},
         "Nackenpresse":  {clicked: false},
         "Seitheben":     {clicked: false}
-      }, progress: 0,
-      totalCount:  0
+      },
+      ...regionProps
     },
     "belly":    {
       data:       {
@@ -65,8 +70,7 @@ const initialState = {
         "Hantelcurls": {clicked: false},
         "Dips":        {clicked: false}
       },
-      progress:   0,
-      totalCount: 0
+      ...regionProps
     },
     "legs":     {
       data:        {
@@ -74,16 +78,14 @@ const initialState = {
         "Beinbizeps":  {clicked: false},
         "Beintrizeps": {clicked: false}
       },
-      progress: 0,
-      totalCount:  0
+      ...regionProps
     }
   },
   selectedRegions:     [],
   modalPickerValue:    "chest",
   modalTextInputValue: null,
-  stopwatchTime:       "00:00:00",
-  averageTime:         "00:00:00",
-  timeStore:           []
+  modalVisible:        false,
+  stopwatchTime:       "00:00:00"
 }
 
 export default (state = initialState, action) =>{
@@ -147,10 +149,19 @@ export default (state = initialState, action) =>{
     }
 
   case ADD_NEW_TIME:
-    return {...state, timeStore: [...state.timeStore, Time.timestampToSeconds(action.payload)], averageTime: Time.secondsToTimestamp(Time.getAverageTimeInSeconds([...state.timeStore, Time.timestampToSeconds(action.payload)]))}
+    const {time, selectedRegions} = action.payload
+    return {
+      ...state,
+      stack: {...state.stack, [
+        selectedRegions[0]]: {
+        ...state.stack[selectedRegions[0]],
+          lastTime: time,
+          timeStore: [...state.stack[selectedRegions[0]].timeStore, Time.timestampToSeconds(time)],
+          averageTime: Time.secondsToTimestamp(Time.getAverageTimeInSeconds([...state.stack[selectedRegions[0]].timeStore, Time.timestampToSeconds(time)]))}}
+    }
 
   case INCREMENT_TOTAL_WORKOUT_COUNT:
-    return {...state, stack: {...state.stack, [action.payload[0]]: {...state.stack[action.payload[0]], totalCount: ++state.stack[action.payload[0]].totalCount}, [action.payload[1]]: {...state.stack[action.payload[1]], totalCount: ++state.stack[action.payload[1]].totalCount}}}
+    return {...state, stack: {...state.stack, [action.payload[0]]: {...state.stack[action.payload[0]], totalWorkouts: ++state.stack[action.payload[0]].totalWorkouts}, [action.payload[1]]: {...state.stack[action.payload[1]], totalWorkouts: ++state.stack[action.payload[1]].totalWorkouts}}}
 
   default:
     return state

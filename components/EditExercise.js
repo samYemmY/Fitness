@@ -127,83 +127,85 @@ class EditExercise extends React.Component {
           paddingLeft:    10,
           paddingRight:   10
         }}>
-          <View style={{flex: 4}}><Text style={{fontSize: 25, fontWeight: "bold"}}>{selectedExercise}</Text></View>
+          <View style={{flex: 4}}><Text style={{fontSize: 21, fontWeight: "bold"}}>{selectedExercise}</Text></View>
         </View>
 
-        <View style={{marginTop: 40}}>
-          <View><Text style={{fontWeight: "bold"}}>Gewicht (kg)</Text></View>
-          <View style={{flexDirection: "row", width: "100%", height: 110}}>
-            <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-              <View style={{flex: 1, alignItems: "center"}}><Image source={Images.weight}
-                                                                   style={{width: 40, height: 40}}/></View>
-              <View style={{flex: 3, alignItems: "center"}}><TextInput value={weight.toString()}
-                                                                       keyboardType={"numeric"}
-                                                                       onChangeText={(weight) => this.changeValue("weight", weight)}
-                                                                       style={{
-                                                                         fontSize:          21,
-                                                                         borderBottomWidth: 0.5,
-                                                                         width:             175
-                                                                       }} placeholder={"50"}/></View>
-            </View>
-            <View style={{flex: 1, justifyContent: "space-around", alignItems: "center"}}>
-              <TouchableImage source={Images.plus} width={25} height={25} style={styles.shadow}
-                              onPress={() => this.incrementValue("weight")}/>
-              <TouchableImage source={Images.minus} width={25} height={25} style={styles.shadow}
-                              onPress={() => this.decrementValue("weight")}/>
+        <View style={{ paddingLeft: 10}}>
+          <View style={{marginTop: 40}}>
+            <View><Text style={{fontWeight: "bold"}}>Gewicht (kg)</Text></View>
+            <View style={{flexDirection: "row", width: "100%", height: 110}}>
+              <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                <View style={{flex: 1, alignItems: "center"}}><Image source={Images.weight}
+                                                                     style={{width: 40, height: 40}}/></View>
+                <View style={{flex: 3, alignItems: "center"}}><TextInput value={weight.toString()}
+                                                                         keyboardType={"numeric"}
+                                                                         onChangeText={(weight) => this.changeValue("weight", weight)}
+                                                                         style={{
+                                                                           fontSize:          21,
+                                                                           borderBottomWidth: 0.5,
+                                                                           width:             175
+                                                                         }} placeholder={"50"}/></View>
+              </View>
+              <View style={{flex: 1, justifyContent: "space-around", alignItems: "center"}}>
+                <TouchableImage source={Images.plus} width={25} height={25} style={styles.shadow}
+                                onPress={() => this.incrementValue("weight")}/>
+                <TouchableImage source={Images.minus} width={25} height={25} style={styles.shadow}
+                                onPress={() => this.decrementValue("weight")}/>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View>
-          <View><Text style={{fontWeight: "bold"}}>Wiederholungen</Text></View>
-          <View style={{flexDirection: "row", width: "100%", height: 110}}>
-            <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-              <View style={{flex: 1, alignItems: "center"}}><Image source={Images.reps}
-                                                                   style={{width: 40, height: 40}}/></View>
-              <View style={{flex: 3, alignItems: "center"}}><TextInput value={reps.toString()} keyboardType={"numeric"}
-                                                                       onChangeText={(reps) => this.changeValue("reps", reps)}
-                                                                       style={{
-                                                                         fontSize:          21,
-                                                                         borderBottomWidth: 0.5,
-                                                                         width:             175
-                                                                       }} placeholder={"10"}/></View>
-            </View>
-            <View style={{flex: 1, justifyContent: "space-around", alignItems: "center"}}>
-              <TouchableImage source={Images.plus} width={25} height={25} style={styles.shadow}
-                              onPress={() => this.incrementValue("reps")}/>
-              <TouchableImage source={Images.minus} width={25} height={25} style={styles.shadow}
-                              onPress={() => this.decrementValue("reps")}/>
+          <View>
+            <View><Text style={{fontWeight: "bold"}}>Wiederholungen</Text></View>
+            <View style={{flexDirection: "row", width: "100%", height: 110}}>
+              <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                <View style={{flex: 1, alignItems: "center"}}><Image source={Images.reps}
+                                                                     style={{width: 40, height: 40}}/></View>
+                <View style={{flex: 3, alignItems: "center"}}><TextInput value={reps.toString()} keyboardType={"numeric"}
+                                                                         onChangeText={(reps) => this.changeValue("reps", reps)}
+                                                                         style={{
+                                                                           fontSize:          21,
+                                                                           borderBottomWidth: 0.5,
+                                                                           width:             175
+                                                                         }} placeholder={"10"}/></View>
+              </View>
+              <View style={{flex: 1, justifyContent: "space-around", alignItems: "center"}}>
+                <TouchableImage source={Images.plus} width={25} height={25} style={styles.shadow}
+                                onPress={() => this.incrementValue("reps")}/>
+                <TouchableImage source={Images.minus} width={25} height={25} style={styles.shadow}
+                                onPress={() => this.decrementValue("reps")}/>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View>
-          <View><Text style={{fontWeight: "bold"}}>Sets</Text></View>
-          <View style={{flexDirection: "row", width: "100%", height: 110}}>
-            <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-              <View style={{flex: 1, alignItems: "center"}}><Image source={Images.sets}
-                                                                   style={{width: 50, height: 50}}/></View>
-              <View style={{flex: 3, alignItems: "center"}}><TextInput value={sets.toString()} keyboardType={"numeric"}
-                                                                       onChangeText={(sets) => this.changeValue("sets", sets)}
-                                                                       style={{
-                                                                         fontSize:          21,
-                                                                         borderBottomWidth: 0.5,
-                                                                         width:             175
-                                                                       }} placeholder={"3"}/></View>
-            </View>
-            <View style={{flex: 1, justifyContent: "space-around", alignItems: "center"}}>
-              <TouchableImage source={Images.plus} width={25} height={25} style={styles.shadow}
-                              onPress={() => this.incrementValue("sets")}/>
-              <TouchableImage source={Images.minus} width={25} height={25} style={styles.shadow}
-                              onPress={() => this.decrementValue("sets")}/>
+          <View>
+            <View><Text style={{fontWeight: "bold"}}>Sets</Text></View>
+            <View style={{flexDirection: "row", width: "100%", height: 110}}>
+              <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                <View style={{flex: 1, alignItems: "center"}}><Image source={Images.sets}
+                                                                     style={{width: 50, height: 50}}/></View>
+                <View style={{flex: 3, alignItems: "center"}}><TextInput value={sets.toString()} keyboardType={"numeric"}
+                                                                         onChangeText={(sets) => this.changeValue("sets", sets)}
+                                                                         style={{
+                                                                           fontSize:          21,
+                                                                           borderBottomWidth: 0.5,
+                                                                           width:             175
+                                                                         }} placeholder={"3"}/></View>
+              </View>
+              <View style={{flex: 1, justifyContent: "space-around", alignItems: "center"}}>
+                <TouchableImage source={Images.plus} width={25} height={25} style={styles.shadow}
+                                onPress={() => this.incrementValue("sets")}/>
+                <TouchableImage source={Images.minus} width={25} height={25} style={styles.shadow}
+                                onPress={() => this.decrementValue("sets")}/>
+              </View>
             </View>
           </View>
-        </View>
+      </View>
 
-        <View style={{alignItems: "center", width: "100%", marginTop: 25}}>
-          <View style={{width: "75%", height: 120}}>
+        <View style={{alignItems: "center", width: "100%", marginTop: 30}}>
+          <View style={{width: "100%", height: 120}}>
             <Button text={"Speichern"} onPress={this.saveValues.bind(this)} backgroundColor={"black"} color={"white"}
-                    padding={15} borderRadius={10} fontSize={19} fontWeight={"bold"} style={styles.shadowButton}/>
+                    padding={16} borderRadius={10} fontSize={21} fontWeight={"bold"}/>
           </View>
         </View>
       </ScrollView>

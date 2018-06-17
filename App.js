@@ -11,6 +11,7 @@ import {Provider} from 'react-redux'
 import {createStore, applyMiddleware} from 'redux'
 import reducers from "./reducers"
 import {Router, EaseOut} from "./components/common"
+import ModalAddExercise  from "./components/ModalAddExercise"
 import BodyRegionSelection from "./components/BodyRegionSelection"
 import ExerciseList from "./components/ExerciseList"
 import EditExercise from "./components/EditExercise"
@@ -26,6 +27,9 @@ const RootStack = createStackNavigator({
   },
   EditExercise:        {
     screen: EditExercise
+  },
+  ModalAddExercise: {
+    screen: ModalAddExercise
   }
 }, {
 
@@ -66,17 +70,14 @@ export default class App extends Component<Props> {
         if (value && value.length)
         {
           let initialStore = JSON.parse(value)
-          console.log(initialStore)
           this.setState({store: createStore(reducers, initialStore)});
         }
         else
         {
-          console.log(store.getState())
           this.setState({store: store});
         }
         this.setState({isStoreLoading: false});
       }).catch((error) =>{
-        console.log("error")
         this.setState({store: store});
         this.setState({isStoreLoading: false});
       })
@@ -88,6 +89,11 @@ export default class App extends Component<Props> {
     YellowBox.ignoreWarnings(['Warning: isMounted(...)', "Remote debugger",
                               "Warning: Cannot update during an existing state transition"
     ]);
+  }
+
+  componentDidMount()
+  {
+    console.log(this.state.store.getState())
   }
 
   componentWillUnmount()

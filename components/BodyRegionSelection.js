@@ -1,25 +1,28 @@
 import React from "react"
 import {View, Text, Dimensions, TouchableOpacity, Image, StatusBar} from "react-native"
 import {PaginationIndicator, Button, TouchableImage} from "./common";
+import Images from "./Images"
 import {connect} from "react-redux"
 import {selectLanguage} from "../actions/languageActions";
-import {selectRegion} from "../actions/exerciseActions"
+import {selectRegion, changeExerciseProp} from "../actions/exerciseActions"
+import {changeEditExercise} from "../actions/editExerciseActions";
 import Lrc from "./Lrc"
 
 const styles = {
   mainView:  {
     backgroundColor: "white",
     height:          "100%",
-    alignItems:      "center"
+    alignItems:      "center",
+    paddingLeft: 30,
+    paddingRight: 30
   },
   titleView: {
-    marginTop:      40,
-    height:         80,
+    height:         100,
     justifyContent: "center",
     alignItems:     "center"
   },
   titleText: {
-    fontSize:   19,
+    fontSize:   21,
     fontWeight: "bold"
   }
 }
@@ -35,7 +38,7 @@ class BodyRegionSelection extends React.Component {
   state = {
     title:         "",
     regions:       [["back", "biceps"], ["chest", "triceps"], ["shoulder", "belly", "legs"]],
-    icons:         [require("../img/biceps.png"), require("../img/back.png")],
+    icons:         [Images.biceps, Images.back],
     averageTime:   "1:07",
     indexSelected: 0
   }
@@ -53,6 +56,24 @@ class BodyRegionSelection extends React.Component {
   {
     this.props.navigation.setParams({title: this.props.lrc.BodyRegionSelection.title})
     this.setState({title: this.getRegionTitle(this.state.indexSelected)})
+    if(!this.props.store.isInitialized)
+    {
+      this.initStore()
+    }
+  }
+
+  initStore()
+  {
+    let store = {}
+    for (const region in this.props.stack)
+    {
+      for (const exercise in this.props.stack[region].data)
+      {
+        store[exercise] = {weight: 10, reps: 10, sets: 3}
+      }
+    }
+    store.isInitialized = true
+    this.props.changeEditExercise("store", store)
   }
 
   getRegionTitle(index)
@@ -78,7 +99,7 @@ class BodyRegionSelection extends React.Component {
   handleClick(regions)
   {
     this.props.selectRegion(regions)
-    this.props.navigation.navigate("ExerciseList", {title: this.props.lrc.ExerciseList.title})
+    this.props.navigation.navigate("ExerciseList", {title: this.props.lrc.ExerciseList.title, labelAdd: this.props.lrc.add, navigation: this.props.navigation})
   }
 
   selectNext()
@@ -113,8 +134,11 @@ class BodyRegionSelection extends React.Component {
 
   render()
   {
-    const {title, region, startWorkout, averageTime} = this.props.lrc.BodyRegionSelection
+    const {title, region, labelStartWorkout, labelAverageTime, labelTotalWorkouts, labelLastWorkoutTime} = this.props.lrc.BodyRegionSelection
     const selectedRegions = this.state.regions[this.state.indexSelected]
+    const {averageTime, lastTime, totalWorkouts} = this.props.stack[selectedRegions[0]]
+    const averageTimeFormatted = averageTime.substring(0, averageTime.length - 3)
+    const lastTimeFormatted = lastTime.substring(0, lastTime.length - 3)
     return (
       <View style={styles.mainView}>
 
@@ -124,28 +148,17 @@ class BodyRegionSelection extends React.Component {
         />
 
         <View style={styles.titleView}>
-          <Text style={styles.titleText}>{this.state.title}</Text>
+          <Text style={styles.titleText}>{ this.state.title }</Text>
         </View>
 
-        <View style={{width: "75%", flexDirection: "row", justifyContent: "space-around", marginTop: 10}}>
-          <TouchableImage source={require("../img/arrow_small.png")} style={{
-            width:         20, height: 40,
-            shadowColor:   '#000',
-            shadowOffset:  {width: 0, height: 2},
-            shadowOpacity: 0.3,
-            shadowRadius:  1,
-          }} onPress={this.selectPrevious.bind(this)}/>
+        <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 10}}>
+          <TouchableImage source={require("../img/arrow_small.png")} style={{width: 10, height: 15}} onPress={this.selectPrevious.bind(this)}/>
           <View style={{flexDirection: "row"}}>
             <TouchableImage source={this.state.icons[0]} style={{width: 60, height: 60}}/>
             <TouchableImage source={this.state.icons[1]} style={{width: 60, height: 60}}/>
           </View>
           <TouchableImage source={require("../img/arrow_small.png")} style={{
-            width:         20, height: 40, transform: [{scaleX: -1}],
-            shadowColor:   '#000',
-            shadowOffset:  {width: 0, height: 2},
-            shadowOpacity: 0.3,
-            shadowRadius:  1,
-          }} onPress={this.selectNext.bind(this)}/>
+            width: 10, height: 15, transform: [{scaleX: -1}]}} onPress={this.selectNext.bind(this)}/>
         </View>
 
         <View style={{width: "100%", justifyContent: "center", alignItems: "center", marginTop: 50}}>
@@ -153,27 +166,26 @@ class BodyRegionSelection extends React.Component {
                                style={{justifyContent: "center", alignItems: "center"}}/>
         </View>
 
-        <View style={{width: "75%", height: 100, justifyContent: "space-between", marginTop: 60}}>
-          <View style={{flexDirection: "row", justifyContent: "space-between"}}><Text
-            style={{fontSize: 17}}>{this.props.lrc.BodyRegionSelection.totalWorkouts}</Text> <Text
-            style={{fontSize: 17, fontFamily: "Lato-Bold", letterSpacing: 1}}>{this.props.stack[selectedRegions[0]].totalCount}</Text></View>
-          <View style={{flexDirection: "row", justifyContent: "space-between"}}><Text
-            style={{fontSize: 17}}>{this.props.lrc.BodyRegionSelection.lastWorkoutTime}</Text> <Text
-            style={{fontSize: 17, fontFamily: "Lato-Bold", letterSpacing: 1}}>{this.props.stopwatchTime}</Text></View>
-          <View style={{flexDirection: "row", justifyContent: "space-between"}}><Text
-            style={{fontSize: 17}}>{this.props.lrc.BodyRegionSelection.averageTime}</Text> <Text
-            style={{fontSize: 17, fontFamily: "Lato-Bold", letterSpacing: 1}}>{this.props.averageTime}</Text></View>
+        <View style={{width: "100%", height: 120, justifyContent: "space-between", marginTop: 80}}>
+          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
+            style={{fontSize: 19, fontFamily: "Lato-Light"}}>{ labelTotalWorkouts + ":" }</Text> <Text
+            style={{fontSize: 19, letterSpacing: 1}}>{ totalWorkouts }</Text></View>
+          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
+            style={{fontSize: 19, fontFamily: "Lato-Light"}}>{ labelLastWorkoutTime + ":" }</Text> <Text
+            style={{fontSize: 19, letterSpacing: 1}}>{ lastTimeFormatted }</Text></View>
+          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
+            style={{fontSize: 19, fontFamily: "Lato-Light"}}>{ labelAverageTime + ":" }</Text> <Text
+            style={{fontSize: 19, letterSpacing: 1}}>{ averageTimeFormatted }</Text></View>
         </View>
 
-        <View style={{width: "75%", height: 120, marginTop: 50}}>
-          <Button text={startWorkout} backgroundColor={"black"} color={"white"} padding={15} borderRadius={10}
-                  fontSize={19} fontWeight={"bold"}
-                  onPress={() => this.handleClick(selectedRegions)} style={{
-            shadowColor:   '#000',
-            shadowOffset:  {width: 0, height: 2},
-            shadowOpacity: 0.8,
-            shadowRadius:  2,
-          }}/>
+        <View style={{width: "100%", marginTop: 55}}>
+          <Button text={labelStartWorkout}
+                  backgroundColor={"black"}
+                  color={"white"}
+                  padding={16}
+                  borderRadius={10}
+                  fontSize={21}
+                  onPress={() => this.handleClick(selectedRegions)} />
         </View>
 
       </View>
@@ -184,8 +196,8 @@ class BodyRegionSelection extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
   lrc:           state.language.lrc,
   stopwatchTime: state.exercises.stopwatchTime,
-  averageTime: state.exercises.averageTime,
-  stack: state.exercises.stack
+  stack: state.exercises.stack,
+  store: state.editExercise.store
 })
 
-export default connect(mapStateToProps, {selectLanguage, selectRegion})(BodyRegionSelection)
+export default connect(mapStateToProps, {selectLanguage, selectRegion, changeEditExercise, changeExerciseProp})(BodyRegionSelection)
