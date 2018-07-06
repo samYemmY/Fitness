@@ -166,19 +166,19 @@ class BodyRegionSelection extends React.Component {
                                style={{justifyContent: "center", alignItems: "center"}}/>
         </View>
 
-        <View style={{width: "100%", height: 120, justifyContent: "space-between", marginTop: 80}}>
+        <View style={{width: "90%", height: 120, justifyContent: "space-between", marginTop: 80}}>
           <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
-            style={{fontSize: 19, fontFamily: "Lato-Light"}}>{ labelTotalWorkouts + ":" }</Text> <Text
+            style={{fontSize: 17}}>{ labelTotalWorkouts + ":" }</Text> <Text
             style={{fontSize: 19, letterSpacing: 1}}>{ totalWorkouts }</Text></View>
           <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
-            style={{fontSize: 19, fontFamily: "Lato-Light"}}>{ labelLastWorkoutTime + ":" }</Text> <Text
+            style={{fontSize: 17}}>{ labelLastWorkoutTime + ":" }</Text> <Text
             style={{fontSize: 19, letterSpacing: 1}}>{ lastTimeFormatted }</Text></View>
           <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
-            style={{fontSize: 19, fontFamily: "Lato-Light"}}>{ labelAverageTime + ":" }</Text> <Text
+            style={{fontSize: 17}}>{ labelAverageTime + ":" }</Text> <Text
             style={{fontSize: 19, letterSpacing: 1}}>{ averageTimeFormatted }</Text></View>
         </View>
 
-        <View style={{width: "100%", marginTop: 55}}>
+        <View style={{width: "90%", marginTop: 55}}>
           <Button text={labelStartWorkout}
                   backgroundColor={"black"}
                   color={"white"}

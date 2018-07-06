@@ -43,7 +43,7 @@ const styles = {
     backgroundColor: "black",
   },
   seperator:         {
-    height:          1,
+    height:          0.5,
     backgroundColor: "gray",
   },
   sectionFooterText: {
@@ -305,4 +305,3 @@ export default connect(mapStateToProps, {
   addNewTime,
   incrementTotalWorkoutCount
 })(ExerciseList)
-

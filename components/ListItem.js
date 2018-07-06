@@ -1,5 +1,5 @@
 import React from "react"
-import {View, TouchableOpacity, Text, Image} from "react-native";
+import {View, TouchableOpacity, Text, Image, Dimensions} from "react-native";
 import {TouchableImage} from "./common";
 import {connect} from "react-redux"
 import {changeExerciseProp} from "../actions/exerciseActions";
@@ -33,9 +33,10 @@ class ListItem extends React.Component {
   {
     const bgColor    = this.state.clicked ? "rgba(35,255,75,0.2)" : "rgba(115,173,255,0.1)"
     const textStyle  = {
-      fontSize: 16, fontFamily: "Lato-Regular"
+      fontSize: 16,
+      fontFamily: "Lato-Regular"
     }
-    const imgPath    = "../img/" + this.props.regionKey + ".png"
+    const iconWidth = 35
     const EditButton = () => (
       <TouchableOpacity style={{
         backgroundColor: this.state.clicked ? "lightgreen" : "lightblue",
@@ -48,19 +49,28 @@ class ListItem extends React.Component {
     )
     return (
       <Swipeable onRef={ref => this.swipeable = ref} rightButtons={[<EditButton/>]}>
-        <TouchableOpacity style={{height: 90, position: "relative", alignItems: "center", backgroundColor: bgColor}}
+        <TouchableOpacity style={{height: 90, backgroundColor: bgColor}}
                           onPress={this.props.onPress}>
-          <View style={{position: "absolute", top: 20, left: 30}}> <Image source={Images[this.props.regionKey]}
-                                                                          style={{width: 20, height: 20}}/> </View>
-          <View style={{}}> <Text
-            style={{...textStyle, textAlign: "center", marginTop: 15, fontFamily: "Lato-Bold"}}>{this.props.item}</Text>
+
+          <View style={{ marginTop: 15, alignSelf: "center", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+            <Text style={{...textStyle, paddingLeft: 10, fontFamily: "Lato-Bold"}}>{this.props.item}</Text>
           </View>
-          <View
-            style={{flexDirection: "row", justifyContent: "space-around", flex: 1, alignItems: "center", width: "90%"}}>
-            <Text style={textStyle}>{this.props.weight + " kg"}</Text>
-            <Text style={textStyle}>{this.props.reps + " x"}</Text>
-            <Text style={textStyle}>{this.props.sets + " sets"}</Text>
-          </View>
+
+            <View>
+            </View>
+
+            <View style={{
+              marginTop: 15,
+              width: "75%",
+              alignSelf: "center",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between"}}>
+              <Text style={textStyle}>{this.props.weight + " kg"}</Text>
+              <Text style={textStyle}>{this.props.reps + " x"}</Text>
+              <Text style={textStyle}>{this.props.sets + " sets"}</Text>
+            </View>
+
         </TouchableOpacity>
       </Swipeable>
     )
