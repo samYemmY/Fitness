@@ -1,6 +1,7 @@
 import {
   SELECT_REGION,
-  ADD_EXERCISE,
+  ADD_EXERCISE_TO_STACK,
+  DELETE_EXERCISE_FROM_STACK,
   CHANGE_EXERCISES,
   CLEAR_EXERCISE_PROGRESS,
   TOGGLE_EXERCISE_CLICK,
@@ -8,16 +9,26 @@ import {
   ADD_NEW_TIME,
   INCREMENT_TOTAL_WORKOUT_COUNT
 } from "../types"
+import {dispatch,store} from "react-redux"
 
 export const selectRegion = (name) => ({
   type:    SELECT_REGION,
   payload: name
 })
 
-export const addExercise = (region, exercise) => ({
-  type:    ADD_EXERCISE,
-  payload: {region, exercise}
-})
+export const addExerciseToStack = (region, exercise) => {
+  return {
+    type:    ADD_EXERCISE_TO_STACK,
+    payload: {region, exercise}
+  }
+}
+
+export const deleteExerciseFromStack = (region, name) => {
+  return {
+    type: DELETE_EXERCISE_FROM_STACK,
+    payload: {region, name}
+  }
+}
 
 export const changeExerciseProp = (prop, value) => {
   return(

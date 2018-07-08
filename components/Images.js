@@ -6,6 +6,7 @@ export default {
   reps: require("../img/reps.png"),
   sets: require("../img/sets.png"),
   plus: require("../img/plus.png"),
+  "plus-white": require("../img/plus-white.png"),
   minus: require("../img/minus.png"),
   hantel: require("../img/hantel.png")
 }

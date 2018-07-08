@@ -1,5 +1,12 @@
 export default {
   en: {
+    finish: "finish",
+    reset: "reset",
+    weight: "Weight",
+    reps: "Reps",
+    sets: "Sets",
+    initialValues: "Initial Values",
+    benchPress: "Bench Press",
     add: "Add",
     save: "Save",
     back: "Back",
@@ -30,8 +37,15 @@ export default {
       labelNavBar: "Add Exercise"
     }
   },
-  ger: {
-    add: "Hinzufügen",
+  de: {
+    finish: "Beenden",
+    reset: "Reset",
+    weight: "Gewicht",
+    reps: "Wiederholungen",
+    sets: "Sätze",
+    initialValues: "Anfangswerte",
+    benchPress: "Bankdrücken",
+    add: "",
     save: "Speichern",
     back: "Zurück",
     next: "Vor",

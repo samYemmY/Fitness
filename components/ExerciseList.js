@@ -11,6 +11,7 @@ import {
 } from "react-native"
 import {NavBar, Button, TouchableImage} from "./common";
 import ListItem from "./ListItem"
+import Images from "./Images"
 import ModalAddExercise from "./ModalAddExercise"
 import {connect} from "react-redux"
 import {changeEditExercise} from "../actions/editExerciseActions";
@@ -74,7 +75,7 @@ class ExerciseList extends React.Component {
     {
       return {
         title: state.params.title,
-        headerRight: <Button onPress={() => state.params.navigation.navigate("ModalAddExercise", {})} text={state.params.labelAdd} height={40} fontWeight={"bold"} color="white" />
+        headerRight: <TouchableImage source={Images["plus-white"]} style={{marginRight: 20}} width={20} height={20} onPress={() => state.params.navigation.navigate("ModalAddExercise", {})} />,
       }
     }
   }
@@ -86,6 +87,7 @@ class ExerciseList extends React.Component {
 
   componentWillReceiveProps(props)
   {
+    console.log(props.store)
     this.setState({
       sections: this.formatSections(props)
     })
@@ -93,7 +95,6 @@ class ExerciseList extends React.Component {
 
   componentWillMount()
   {
-    console.log("mounting list")
     this.getTitle()
     const sections = this.formatSections()
     this.setState({
@@ -230,6 +231,7 @@ class ExerciseList extends React.Component {
 
   renderFooter()
   {
+    const {lrc} = this.props
     return (
       <View style={{
         backgroundColor: "black",
@@ -242,7 +244,7 @@ class ExerciseList extends React.Component {
         borderColor:     "gray"
       }}>
         <View style={{flex: 1}}>
-          <Button text={"Reset"} color={"white"} fontWeight={"bold"} borderWidth={1} borderRadius={20} borderColor={"white"} onPress={this.resetState.bind(this)}/>
+          <Button text={lrc.reset} color={"white"} fontWeight={"bold"} borderWidth={1} borderRadius={20} borderColor={"white"} onPress={this.resetState.bind(this)}/>
         </View>
         <View style={{flex: 1}}>
           <View style={{paddingLeft: 15}}>
@@ -253,7 +255,7 @@ class ExerciseList extends React.Component {
           </View>
         </View>
         <View style={{flex: 1}}>
-          <Button text={"Finish"} color={"white"} borderWidth={1} borderRadius={20} borderColor={"lime"} fontSize={13} fontWeight={"bold"} onPress={this.finishExercise.bind(this)}/>
+          <Button text={lrc.finish} color={"white"} borderWidth={1} borderRadius={20} borderColor={"lime"} fontSize={13} fontWeight={"bold"} onPress={this.finishExercise.bind(this)}/>
         </View>
       </View>
     )
@@ -261,16 +263,16 @@ class ExerciseList extends React.Component {
 
   render()
   {
-    const {lrc, stack} = this.props
+    const {lrc, stack, store} = this.props
     return (
-      <View style={{height: "100%", backgroundColor: "white"}}>
+      <View style={{height: "100%", backgroundColor: "rgb(240, 247, 255)"}}>
         <SectionList renderItem={this.renderItem.bind(this)}
                      keyExtractor={this._keyExtractor}
                      renderSectionHeader={this.renderSectionHeader.bind(this)}
                      sections={this.state.sections}
                      ItemSeparatorComponent={this.renderSeparator}
         />
-        {this.renderFooter()}
+      {this.renderFooter()}
       </View>
     )
 

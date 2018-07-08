@@ -1,6 +1,7 @@
 import {
   SELECT_REGION,
-  ADD_EXERCISE,
+  ADD_EXERCISE_TO_STACK,
+  DELETE_EXERCISE_FROM_STACK,
   CHANGE_EXERCISES,
   SET_STOPWATCH_TIME,
   CLEAR_EXERCISE_PROGRESS,
@@ -81,9 +82,7 @@ const initialState = {
       ...regionProps
     }
   },
-  selectedRegions:     [],
-  modalPickerValue:    "chest",
-  modalTextInputValue: null,
+  selectedRegions:     ["chest","triceps"],
   modalVisible:        false,
   stopwatchTime:       "00:00:00"
 }
@@ -97,14 +96,19 @@ export default (state = initialState, action) =>{
   case SELECT_REGION:
     return {...state, selectedRegions: action.payload}
 
-  case ADD_EXERCISE:
+  case ADD_EXERCISE_TO_STACK:
     return {
       ...state,
       stack: {
         ...state.stack,
-        [action.payload.region]: {data: [...state.stack[action.payload.region].data, action.payload.exercise]}
+        [action.payload.region]: {...state.stack[action.payload.region], data: {...state.stack[action.payload.region].data, [action.payload.exercise]: {clicked: false}}}
       }
     }
+
+  case DELETE_EXERCISE_FROM_STACK:
+    let newState = {...state}
+    delete newState.stack[action.payload.region].data[action.payload.name]
+    return newState
 
   case CLEAR_EXERCISE_PROGRESS:
     newState = {...state}

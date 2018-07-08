@@ -20,16 +20,28 @@ import {createStackNavigator} from 'react-navigation';
 
 const RootStack = createStackNavigator({
   BodyRegionSelection: {
-    screen: BodyRegionSelection
+    screen: BodyRegionSelection,
+    navigationOptions: {
+      headerBackTitle: " "
+    }
   },
   ExerciseList:        {
-    screen: ExerciseList
+    screen: ExerciseList,
+    navigationOptions: {
+      headerBackTitle: " "
+    }
   },
   EditExercise:        {
-    screen: EditExercise
+    screen: EditExercise,
+    navigationOptions: {
+      headerBackTitle: " "
+    }
   },
   ModalAddExercise: {
-    screen: ModalAddExercise
+    screen: ModalAddExercise,
+    navigationOptions: {
+      headerBackTitle: " "
+    }
   }
 }, {
 
@@ -43,6 +55,7 @@ const RootStack = createStackNavigator({
     headerTitleStyle: {
       fontWeight: 'bold',
     },
+    headerBackTitle: ""
   }
 })
 
@@ -123,4 +136,3 @@ export default class App extends Component<Props> {
     }
   }
 }
-

@@ -3,6 +3,8 @@ import {View, TouchableOpacity, Text, Image, Dimensions} from "react-native";
 import {TouchableImage} from "./common";
 import {connect} from "react-redux"
 import {changeExerciseProp} from "../actions/exerciseActions";
+import {deleteExerciseFromStore} from "../actions/editExerciseActions"
+import {deleteExerciseFromStack} from "../actions/exerciseActions"
 import Swipeable from "react-native-swipeable"
 import Images from "./Images"
 
@@ -24,14 +26,14 @@ class ListItem extends React.Component {
 
   handleClick()
   {
-    const {weight, reps, sets, item, navigation} = this.props
-    navigation.navigate("EditExercise", {selectedExercise: item, weight, reps, sets})
+    const {weight, reps, sets, item, navigation, deleteExerciseFromStore, deleteExerciseFromStack, regionKey, lrc} = this.props
+    navigation.navigate("EditExercise", {selectedExercise: item, weight, reps, sets, navigation, deleteExerciseFromStore, deleteExerciseFromStack, region: regionKey, lrc})
     this.swipeable.recenter()
   }
 
   render()
   {
-    const bgColor    = this.state.clicked ? "rgba(35,255,75,0.2)" : "rgba(115,173,255,0.1)"
+    const bgColor    = this.state.clicked ? "rgb(240, 247, 255)" : "rgba(115,173,255,0.1)"
     const textStyle  = {
       fontSize: 16,
       fontFamily: "Lato-Regular"
@@ -79,6 +81,7 @@ class ListItem extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   stack: state.exercises.stack,
+  lrc: state.language.lrc
 })
 
-export default connect(mapStateToProps, {changeExerciseProp})(ListItem)
+export default connect(mapStateToProps, {changeExerciseProp, deleteExerciseFromStore, deleteExerciseFromStack})(ListItem)

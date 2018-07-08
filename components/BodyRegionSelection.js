@@ -47,7 +47,8 @@ class BodyRegionSelection extends React.Component {
     if (state.params && state.params.title)
     {
       return {
-        title: state.params.title
+        title: state.params.title,
+        headerBackTitle: ""
       }
     }
   }
@@ -136,6 +137,7 @@ class BodyRegionSelection extends React.Component {
   {
     const {title, region, labelStartWorkout, labelAverageTime, labelTotalWorkouts, labelLastWorkoutTime} = this.props.lrc.BodyRegionSelection
     const selectedRegions = this.state.regions[this.state.indexSelected]
+    console.log(this.props.stack)
     const {averageTime, lastTime, totalWorkouts} = this.props.stack[selectedRegions[0]]
     const averageTimeFormatted = averageTime.substring(0, averageTime.length - 3)
     const lastTimeFormatted = lastTime.substring(0, lastTime.length - 3)

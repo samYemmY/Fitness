@@ -3,7 +3,7 @@ import {TextInputLabel, Button, Section, NavBar, TextBox, TouchableImage, Progre
 import Images from "./Images"
 import {TextInput, View, Dimensions, Text, Button as NativeButton, Image, ScrollView} from "react-native"
 import {connect} from "react-redux"
-import {changeEditExercise} from "../actions/editExerciseActions";
+import {changeEditExercise, deleteExerciseFromStore} from "../actions/editExerciseActions";
 
 const styles = {
   view:           {
@@ -24,13 +24,13 @@ const styles = {
   },
   shadow:         {
     shadowColor:   '#000',
-    shadowOffset:  {width: 0, height: 2},
+    shadowOffset:  { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius:  1
   },
   shadowButton: {
     shadowColor:   '#000',
-    shadowOffset:  {width: 0, height: 2},
+    shadowOffset:  { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius:  2
   }
@@ -46,7 +46,12 @@ class EditExercise extends React.Component {
   }
 
   static navigationOptions = ({navigation: {state}}) => ({
-    title: "Details"
+    title: "Details",
+    headerRight: <Button onPress={() => {
+      state.params.deleteExerciseFromStore(state.params.selectedExercise)
+      state.params.deleteExerciseFromStack(state.params.region, state.params.selectedExercise)
+      state.params.navigation.navigate("ExerciseList")
+    }} text={state.params.lrc.delete} color={"white"} />
   })
 
   componentWillMount()
@@ -64,24 +69,9 @@ class EditExercise extends React.Component {
 
   saveValues()
   {
-    const {weight, reps, sets, selectedExercise} = this.state
-    this.props.changeEditExercise("store", {...this.props.store, [selectedExercise]: {weight, reps, sets}})
+    const {weight, reps, sets, selectedExercise} = this.state.editExercise
+    this.props.changeEditExercise("store", {...this.props.editExercise.store, [selectedExercise]: {weight, reps, sets}})
     this.props.navigation.navigate("ExerciseList")
-  }
-
-  deleteExercise()
-  {
-    const {store, stack, selectedRegion, selectedExercise} = this.props
-    if (store[selectedExercise])
-    {
-      delete store[selectedExercise]
-    }
-    let dataIndex = stack[selectedRegion].data.indexOf(selectedExercise)
-    if (dataIndex !== -1)
-    {
-      stack[selectedRegion].data.splice(dataIndex, 1)
-    }
-    this.props.router.goToPrevious()
   }
 
   changeValue(prop, value)
@@ -117,6 +107,7 @@ class EditExercise extends React.Component {
   renderView()
   {
     const {weight, reps, sets, selectedExercise} = this.state
+    const {lrc} = this.props
     return (
       <View style={{padding: 20, backgroundColor: "white"}}>
         <View style={{
@@ -132,7 +123,7 @@ class EditExercise extends React.Component {
 
         <View style={{ paddingLeft: 10}}>
           <View style={{marginTop: 40, borderBottomWidth: 0.5, borderColor: "gray"}}>
-            <View><Text style={{fontWeight: "bold"}}>Gewicht (kg)</Text></View>
+            <View><Text style={{fontWeight: "bold"}}>{lrc.weight + " (kg)"}</Text></View>
             <View style={{flexDirection: "row", width: "100%", height: 95}}>
               <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
                 <View style={{flex: 1, alignItems: "center"}}>
@@ -151,7 +142,7 @@ class EditExercise extends React.Component {
 
           <View style={{ borderBottomWidth: 0.5, borderColor: "gray", marginTop: 20 }}>
             <View>
-              <Text style={{fontWeight: "bold"}}>Wiederholungen</Text>
+              <Text style={{fontWeight: "bold"}}>{lrc.reps}</Text>
             </View>
             <View style={{flexDirection: "row", width: "100%", height: 95}}>
               <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
@@ -168,10 +159,10 @@ class EditExercise extends React.Component {
             </View>
           </View>
 
-          <View style={{ borderBottomWidth: 0.5, marginTop: 20, borderColor: "gray" }}>
-            <View><Text style={{fontWeight: "bold"}}>Sets</Text></View>
+          <View style={{ borderBottomWidth: 1, marginTop: 20, borderColor: "gray" }}>
+            <View><Text style={{fontWeight: "bold"}}>{lrc.sets}</Text></View>
             <View style={{flexDirection: "row", width: "100%", height: 95}}>
-              <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+              <View style={{flex: 4, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>˝
                 <View style={{flex: 1, alignItems: "center"}}><Image source={Images.sets} style={{width: 40, height: 40}}/></View>
                 <View style={{flex: 3, alignItems: "center"}}>
                   <TextInput value={sets.toString()} keyboardType={"numeric"} onChangeText={(sets) => this.changeValue("sets", sets)} style={{fontSize: 28, width: 175, fontFamily: "Lato-Light" }} placeholder={"3"}/>
@@ -187,13 +178,13 @@ class EditExercise extends React.Component {
 
         <View style={{alignItems: "center", width: "100%", marginTop: 38}}>
           <View style={{width: "100%", height: 120}}>
-            <Button text={"Speichern"} onPress={this.saveValues.bind(this)} backgroundColor={"black"} color={"white"} padding={16} borderRadius={10} fontSize={21} fontWeight={"bold"}/>
+            <Button text={lrc.save} onPress={this.saveValues.bind(this)} backgroundColor={"black"} color={"white"} padding={16} borderRadius={10} fontSize={21} fontWeight={"bold"}/>
           </View>
         </View>
       </View>
     )
   }
-˝¸˝
+
   render()
   {
     return this.state.loading ? this.renderLoading() : this.renderView()
@@ -202,7 +193,7 @@ class EditExercise extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) =>{
-  return state.editExercise
+  return {editExercise: state.editExercise, lrc: state.language.lrc}
 }
 
-export default connect(mapStateToProps,{changeEditExercise})(EditExercise);
+export default connect(mapStateToProps,{changeEditExercise, deleteExerciseFromStore})(EditExercise);
