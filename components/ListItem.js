@@ -4,7 +4,7 @@ import {TouchableImage} from "./common";
 import {connect} from "react-redux"
 import {changeExerciseProp} from "../actions/exerciseActions";
 import {deleteExerciseFromStore} from "../actions/editExerciseActions"
-import {deleteExerciseFromStack} from "../actions/exerciseActions"
+import {changeEditExercise, deleteExerciseFromStack} from "../actions/exerciseActions"
 import Swipeable from "react-native-swipeable"
 import Images from "./Images"
 
@@ -33,7 +33,7 @@ class ListItem extends React.Component {
 
   render()
   {
-    const bgColor    = this.state.clicked ? "rgb(240, 247, 255)" : "rgba(115,173,255,0.1)"
+    const bgColor    = this.state.clicked ? "rgb(192, 253, 192)" : "rgba(115,173,255,0.1)"
     const textStyle  = {
       fontSize: 16,
       fontFamily: "Lato-Regular"
@@ -84,4 +84,4 @@ const mapStateToProps = (state, ownProps) => ({
   lrc: state.language.lrc
 })
 
-export default connect(mapStateToProps, {changeExerciseProp, deleteExerciseFromStore, deleteExerciseFromStack})(ListItem)
+export default connect(mapStateToProps, {changeExerciseProp, deleteExerciseFromStore, deleteExerciseFromStack, changeEditExercise})(ListItem)

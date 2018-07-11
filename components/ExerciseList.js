@@ -87,7 +87,6 @@ class ExerciseList extends React.Component {
 
   componentWillReceiveProps(props)
   {
-    console.log(props.store)
     this.setState({
       sections: this.formatSections(props)
     })
@@ -157,7 +156,10 @@ class ExerciseList extends React.Component {
     const progress = this.props.stack[regionKey].progress
     return (
       <View style={styles.headerView}>
-        <Text style={styles.headerText}>{title}</Text>
+        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+          <Image source={Images[regionKey + "-white"]} style={{ width: 20, height: 20, marginRight: 10 }} />
+          <Text style={styles.headerText}>{title}</Text>
+        </View>
         <View style={{width: "80%", height: 20}}>
           <ProgressViewIOS progress={progress}/>
         </View>

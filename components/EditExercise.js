@@ -69,7 +69,7 @@ class EditExercise extends React.Component {
 
   saveValues()
   {
-    const {weight, reps, sets, selectedExercise} = this.state.editExercise
+    const {weight, reps, sets, selectedExercise} = this.state
     this.props.changeEditExercise("store", {...this.props.editExercise.store, [selectedExercise]: {weight, reps, sets}})
     this.props.navigation.navigate("ExerciseList")
   }

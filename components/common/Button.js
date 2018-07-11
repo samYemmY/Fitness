@@ -24,8 +24,7 @@ const Button = ({onPress, text, backgroundColor, color, width, height, borderWid
         fontSize: fontSize,
         color: color,
         fontWeight: fontWeight,
-        letterSpacing: letterSpacing,
-        marginLeft: 10
+        letterSpacing: letterSpacing
       }
   });
 

@@ -1,6 +1,6 @@
 import React from "react"
 import {View, Text, Dimensions, TouchableOpacity, Image, StatusBar} from "react-native"
-import {PaginationIndicator, Button, TouchableImage} from "./common";
+import {PaginationIndicator, Button, TouchableImage, RadioButton} from "./common";
 import Images from "./Images"
 import {connect} from "react-redux"
 import {selectLanguage} from "../actions/languageActions";
@@ -38,7 +38,6 @@ class BodyRegionSelection extends React.Component {
   state = {
     title:         "",
     regions:       [["back", "biceps"], ["chest", "triceps"], ["shoulder", "belly", "legs"]],
-    icons:         [Images.biceps, Images.back],
     averageTime:   "1:07",
     indexSelected: 0
   }
@@ -113,7 +112,8 @@ class BodyRegionSelection extends React.Component {
       }
       return {
         indexSelected: index,
-        title:         this.getRegionTitle(index)
+        title:         this.getRegionTitle(index),
+        icons:         [Images["back"], Images["biceps"]]
       }
     })
   }
@@ -133,11 +133,20 @@ class BodyRegionSelection extends React.Component {
     })
   }
 
+  renderIcons()
+  {
+    let icons = []
+    for(let region of this.state.regions[this.state.indexSelected])
+    {
+      icons.push(<Image key={region} source={Images[region]} style={{width: 60, height: 60, marginLeft: 10, marginRight: 10}}/>)
+    }
+    return icons
+  }
+
   render()
   {
     const {title, region, labelStartWorkout, labelAverageTime, labelTotalWorkouts, labelLastWorkoutTime} = this.props.lrc.BodyRegionSelection
     const selectedRegions = this.state.regions[this.state.indexSelected]
-    console.log(this.props.stack)
     const {averageTime, lastTime, totalWorkouts} = this.props.stack[selectedRegions[0]]
     const averageTimeFormatted = averageTime.substring(0, averageTime.length - 3)
     const lastTimeFormatted = lastTime.substring(0, lastTime.length - 3)
@@ -156,8 +165,7 @@ class BodyRegionSelection extends React.Component {
         <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 10}}>
           <TouchableImage source={require("../img/arrow_small.png")} style={{width: 10, height: 15}} onPress={this.selectPrevious.bind(this)}/>
           <View style={{flexDirection: "row"}}>
-            <TouchableImage source={this.state.icons[0]} style={{width: 60, height: 60}}/>
-            <TouchableImage source={this.state.icons[1]} style={{width: 60, height: 60}}/>
+            {this.renderIcons()}
           </View>
           <TouchableImage source={require("../img/arrow_small.png")} style={{
             width: 10, height: 15, transform: [{scaleX: -1}]}} onPress={this.selectNext.bind(this)}/>
