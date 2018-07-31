@@ -15,7 +15,7 @@ import ModalAddExercise  from "./components/ModalAddExercise"
 import BodyRegionSelection from "./components/BodyRegionSelection"
 import ExerciseList from "./components/ExerciseList"
 import EditExercise from "./components/EditExercise"
-import Home from "./components/Home"
+import {Color} from "./components/Color"
 import {createStackNavigator} from 'react-navigation';
 
 const RootStack = createStackNavigator({
@@ -49,11 +49,13 @@ const RootStack = createStackNavigator({
 
   navigationOptions: {
     headerStyle:      {
-      backgroundColor: 'black',
+      backgroundColor: "rgb(0,0,0)",
+      borderBottomWidth: 0,
+      borderColor: "black"
     },
-    headerTintColor:  '#fff',
+    headerTintColor:  'white',
+    headerTextColor: "white",
     headerTitleStyle: {
-      fontWeight: 'bold',
     },
     headerBackTitle: ""
   }

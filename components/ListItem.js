@@ -33,7 +33,7 @@ class ListItem extends React.Component {
 
   render()
   {
-    const bgColor    = this.state.clicked ? "rgb(192, 253, 192)" : "rgba(115,173,255,0.1)"
+    const bgColor    = this.state.clicked ? "rgb(192, 253, 192)" : "white"
     const textStyle  = {
       fontSize: 16,
       fontFamily: "Lato-Regular"
@@ -41,7 +41,7 @@ class ListItem extends React.Component {
     const iconWidth = 35
     const EditButton = () => (
       <TouchableOpacity style={{
-        backgroundColor: this.state.clicked ? "lightgreen" : "lightblue",
+        backgroundColor: this.state.clicked ? "lightgreen" : "white",
         flex:            1,
         borderLeftWidth: 1,
         borderColor:     "gray"

@@ -10,6 +10,7 @@ import {
   Image
 } from "react-native"
 import {NavBar, Button, TouchableImage} from "./common";
+import {Color} from "./Color"
 import ListItem from "./ListItem"
 import Images from "./Images"
 import ModalAddExercise from "./ModalAddExercise"
@@ -240,13 +241,13 @@ class ExerciseList extends React.Component {
         alignItems:      "center",
         width:           "100%",
         padding: 10,
-        height:          70,
+        height:          50,
         flexDirection:   "row",
         borderTopWidth:  0.5,
         borderColor:     "gray"
       }}>
         <View style={{flex: 1}}>
-          <Button text={lrc.reset} color={"white"} fontWeight={"bold"} borderWidth={1} borderRadius={20} borderColor={"white"} onPress={this.resetState.bind(this)}/>
+          <Button onPress={this.resetState.bind(this)} text={"Reset"} padding={1} color={"white"}/>
         </View>
         <View style={{flex: 1}}>
           <View style={{paddingLeft: 15}}>
@@ -257,7 +258,7 @@ class ExerciseList extends React.Component {
           </View>
         </View>
         <View style={{flex: 1}}>
-          <Button text={lrc.finish} color={"white"} borderWidth={1} borderRadius={20} borderColor={"lime"} fontSize={13} fontWeight={"bold"} onPress={this.finishExercise.bind(this)}/>
+          <Button onPress={this.finishExercise.bind(this)} padding={1} text={"Finish"} color={"white"}/>
         </View>
       </View>
     )
@@ -267,7 +268,7 @@ class ExerciseList extends React.Component {
   {
     const {lrc, stack, store} = this.props
     return (
-      <View style={{height: "100%", backgroundColor: "rgb(240, 247, 255)"}}>
+      <View style={{height: "100%", backgroundColor: "rgb(81, 81, 81)"}}>
         <SectionList renderItem={this.renderItem.bind(this)}
                      keyExtractor={this._keyExtractor}
                      renderSectionHeader={this.renderSectionHeader.bind(this)}

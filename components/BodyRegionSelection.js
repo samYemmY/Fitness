@@ -1,16 +1,16 @@
 import React from "react"
-import {View, Text, Dimensions, TouchableOpacity, Image, StatusBar} from "react-native"
+import {View, Text, Dimensions, TouchableOpacity, Image, StatusBar, ImageBackground} from "react-native"
 import {PaginationIndicator, Button, TouchableImage, RadioButton} from "./common";
 import Images from "./Images"
 import {connect} from "react-redux"
 import {selectLanguage} from "../actions/languageActions";
 import {selectRegion, changeExerciseProp} from "../actions/exerciseActions"
 import {changeEditExercise} from "../actions/editExerciseActions";
-import Lrc from "./Lrc"
+import {Color} from "./Color"
 
 const styles = {
   mainView:  {
-    backgroundColor: "white",
+    backgroundColor: Color.COLOR_PRIMARY,
     height:          "100%",
     alignItems:      "center",
     paddingLeft: 30,
@@ -23,7 +23,8 @@ const styles = {
   },
   titleText: {
     fontSize:   21,
-    fontWeight: "bold"
+    color: "white",
+    borderRadius: 100
   }
 }
 
@@ -112,8 +113,7 @@ class BodyRegionSelection extends React.Component {
       }
       return {
         indexSelected: index,
-        title:         this.getRegionTitle(index),
-        icons:         [Images["back"], Images["biceps"]]
+        title:         this.getRegionTitle(index)
       }
     })
   }
@@ -138,7 +138,7 @@ class BodyRegionSelection extends React.Component {
     let icons = []
     for(let region of this.state.regions[this.state.indexSelected])
     {
-      icons.push(<Image key={region} source={Images[region]} style={{width: 60, height: 60, marginLeft: 10, marginRight: 10}}/>)
+      icons.push(<Image key={region} source={Images[region + "-white"]} style={{width: 60, height: 60, marginLeft: 20, marginRight: 20}}/>)
     }
     return icons
   }
@@ -150,8 +150,9 @@ class BodyRegionSelection extends React.Component {
     const {averageTime, lastTime, totalWorkouts} = this.props.stack[selectedRegions[0]]
     const averageTimeFormatted = averageTime.substring(0, averageTime.length - 3)
     const lastTimeFormatted = lastTime.substring(0, lastTime.length - 3)
+    const fontColor = {color: "white"};
     return (
-      <View style={styles.mainView}>
+      <ImageBackground source={Images["gradient-gray"]} style={styles.mainView}>
 
         <StatusBar
           barStyle="light-content"
@@ -162,13 +163,8 @@ class BodyRegionSelection extends React.Component {
           <Text style={styles.titleText}>{ this.state.title }</Text>
         </View>
 
-        <View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 10}}>
-          <TouchableImage source={require("../img/arrow_small.png")} style={{width: 10, height: 15}} onPress={this.selectPrevious.bind(this)}/>
-          <View style={{flexDirection: "row"}}>
-            {this.renderIcons()}
-          </View>
-          <TouchableImage source={require("../img/arrow_small.png")} style={{
-            width: 10, height: 15, transform: [{scaleX: -1}]}} onPress={this.selectNext.bind(this)}/>
+        <View style={{flexDirection: "row", width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10}}>
+          {this.renderIcons()}
         </View>
 
         <View style={{width: "100%", justifyContent: "center", alignItems: "center", marginTop: 50}}>
@@ -178,27 +174,30 @@ class BodyRegionSelection extends React.Component {
 
         <View style={{width: "90%", height: 120, justifyContent: "space-between", marginTop: 80}}>
           <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
-            style={{fontSize: 17}}>{ labelTotalWorkouts + ":" }</Text> <Text
-            style={{fontSize: 19, letterSpacing: 1}}>{ totalWorkouts }</Text></View>
+            style={{fontSize: 18, ...fontColor}}>{ labelTotalWorkouts + ":" }</Text> <Text
+            style={{fontSize: 18, letterSpacing: 1, ...fontColor}}>{ totalWorkouts }</Text></View>
           <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
-            style={{fontSize: 17}}>{ labelLastWorkoutTime + ":" }</Text> <Text
-            style={{fontSize: 19, letterSpacing: 1}}>{ lastTimeFormatted }</Text></View>
+            style={{fontSize: 18, ...fontColor}}>{ labelLastWorkoutTime + ":" }</Text> <Text
+            style={{fontSize: 18, letterSpacing: 1, ...fontColor}}>{ lastTimeFormatted }</Text></View>
           <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
-            style={{fontSize: 17}}>{ labelAverageTime + ":" }</Text> <Text
-            style={{fontSize: 19, letterSpacing: 1}}>{ averageTimeFormatted }</Text></View>
+            style={{fontSize: 18, ...fontColor}}>{ labelAverageTime + ":" }</Text> <Text
+            style={{fontSize: 18, letterSpacing: 1, ...fontColor}}>{ averageTimeFormatted }</Text></View>
         </View>
 
         <View style={{width: "90%", marginTop: 55}}>
           <Button text={labelStartWorkout}
-                  backgroundColor={"black"}
+                  backgroundColor={"rgb(73, 73, 73)"}
                   color={"white"}
                   padding={16}
                   borderRadius={10}
-                  fontSize={21}
+                  borderColor={"rgb(86, 86, 86)"}
+                  borderWidth={0}
+                  fontSize={18}
+                  fontWeight={"bold"}
                   onPress={() => this.handleClick(selectedRegions)} />
         </View>
 
-      </View>
+      </ImageBackground>
     )
   }
 }
