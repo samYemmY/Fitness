@@ -78,22 +78,22 @@ class ModalAddExercise extends React.Component
           <View>
             <Text style={{ fontSize, fontFamily: "Lato-Black" }}>{lrc.Modal.labelSelectRegion}</Text>
           </View>
-          <Picker selectedValue={this.state.region} onValueChange={(itemValue, itemIndex) => {this.changeValue("region", itemValue)}}>
+          <Picker itemStyle={{ borderWidth: 0.5, height: 150, marginTop: 30 }} selectedValue={this.state.region} onValueChange={(itemValue, itemIndex) => {this.changeValue("region", itemValue)}}>
             {this.renderPickerItems()}
           </Picker>
 
-          <View style={{ marginTop: 20}}>
+          <View style={{ marginTop: 30}}>
             <Text style={{ fontSize, fontFamily: "Lato-Black" }}>{lrc.Modal.labelExerciseName}</Text>
           </View>
-          <View style={{width: "100%", marginTop: 20}}>
+          <View style={{width: "100%", marginTop: 30}}>
             <TextInput style={{ fontSize }} placeholder={lrc.benchPress} onChangeText={(text) => this.changeValue("name", text)} defaultValue={"Test"}/>
           </View>
 
-          <View style={{ marginTop: 20}}>
-            <Text style={{ fontSize, marginTop: 20, fontFamily: "Lato-Black" }}>{lrc.initialValues}</Text>
+          <View style={{ marginTop: 30}}>
+            <Text style={{ fontSize, marginTop: 30, fontFamily: "Lato-Black" }}>{lrc.initialValues}</Text>
           </View>
 
-          <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 15, alignItems: "center", marginTop: 10, height: 95 }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 15, alignItems: "center", marginTop: 20, height: 95 }}>
             <View style={{ justifyContent: "space-between", alignItems: "center", height: "100%" }}>
               <Text style={{ fontSize }}>{lrc.weight + " (kg)"}</Text>
               <View style={{ alignItems: "center", flexDirection: "row", width: 60, justifyContent: "space-between"}}>
@@ -103,7 +103,7 @@ class ModalAddExercise extends React.Component
             </View>
 
             <View style={{ justifyContent: "space-between", alignItems: "center", height: "100%" }}>
-              <Text style={{ fontSize }}>{lrc.reps}</Text>
+              <Text style={{ fontSize }}>{lrc.reps.trim(9)}</Text>
               <View style={{ alignItems: "center", flexDirection: "row", width: 60, justifyContent: "space-between"}}>
                 <Image source={Images.reps} style={{ width: imageSize, height: imageSize}}/>
                 <TextInput placeholder={"10"} style={{ fontSize: fontSize * 1.3 }} onChangeText={(text) => this.changeValue("reps", text)} defaultValue={"10"}/>
@@ -119,7 +119,7 @@ class ModalAddExercise extends React.Component
             </View>
           </View>
 
-          <View style={{width: "100%", marginTop: 10}}>
+          <View style={{width: "100%", marginTop: 5}}>
             <Button text={lrc.save}
                     backgroundColor={"black"}
                     color={"white"}

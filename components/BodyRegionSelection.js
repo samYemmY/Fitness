@@ -1,5 +1,5 @@
 import React from "react"
-import {View, Text, Dimensions, TouchableOpacity, Image, StatusBar, ImageBackground} from "react-native"
+import {View, Text, Dimensions, TouchableOpacity, Image, StatusBar, ImageBackground, PanResponder, LayoutAnimation} from "react-native"
 import {PaginationIndicator, Button, TouchableImage, RadioButton} from "./common";
 import Images from "./Images"
 import {connect} from "react-redux"
@@ -26,21 +26,45 @@ const styles = {
     color: "white",
     borderRadius: 100
   }
-}
+};
 
 
 class BodyRegionSelection extends React.Component {
-  constructor(props)
-  {
-    super(props)
-    this.getRegionTitle = this.getRegionTitle.bind(this)
-  }
 
   state = {
     title:         "",
     regions:       [["back", "biceps"], ["chest", "triceps"], ["shoulder", "belly", "legs"]],
     averageTime:   "1:07",
-    indexSelected: 0
+    indexSelected: 0,
+    isSwiping: false,
+  };
+
+  constructor(props)
+  {
+    super(props);
+    this.getRegionTitle = this.getRegionTitle.bind(this);
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onPanResponderGrant: (evt, gestureState) => {
+        this.setState({ isSwiping: true });
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        this.handlePanResponderMove(evt, gestureState);
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => true,
+      onPanResponderRelease: (evt, gestureState) => {
+
+      },
+      onPanResponderTerminate: (evt, gestureState) => {
+
+      },
+      onShouldBlockNativeResponder: (evt, gestureState) => {
+        return true;
+      },
+    });
   }
 
   static navigationOptions = ({navigation: {state}}) =>{
@@ -48,14 +72,42 @@ class BodyRegionSelection extends React.Component {
     {
       return {
         title: state.params.title,
-        headerBackTitle: ""
+        headerBackTitle: "",
+        headerRight:  <TouchableImage source={Images.settings} imageStyle={{ width:25, height:25, marginRight: 20 }} onPress={() => state.params.navigation.navigate("Settings", {title: "Settings"})}/>
       }
+    }
+  }
+
+  handlePanResponderMove(evt, gestureState)
+  {
+    const setupReset = (gestureState) => {
+      LayoutAnimation.configureNext({
+        duration: 500,
+        create: {
+          type: LayoutAnimation.Types.spring,
+          property: LayoutAnimation.Properties.opacity,
+        },
+        update: {
+          type: LayoutAnimation.Types.spring,
+        }}); gestureState.dx = 0; this.setState({ isSwiping: false });
+    }
+    if(gestureState.dx >= 100 && this.state.isSwiping){ setupReset(gestureState); this.selectNext(); }
+    if(gestureState.dx <= -100 && this.state.isSwiping){ setupReset(gestureState); this.selectPrevious(); }
+  }
+
+  componentDidUpdate(prevProps)
+  {
+    console.log(prevProps, this.props)
+    if(prevProps.selectedLanguage != this.props.selectedLanguage)
+    {
+      this.setState({ title: this.getRegionTitle(this.state.indexSelected) })
+      this.props.navigation.setParams({title: this.props.lrc.BodyRegionSelection.title, navigation: this.props.navigation})
     }
   }
 
   componentWillMount()
   {
-    this.props.navigation.setParams({title: this.props.lrc.BodyRegionSelection.title})
+    this.props.navigation.setParams({title: this.props.lrc.BodyRegionSelection.title, navigation: this.props.navigation})
     this.setState({title: this.getRegionTitle(this.state.indexSelected)})
     if(!this.props.store.isInitialized)
     {
@@ -88,15 +140,6 @@ class BodyRegionSelection extends React.Component {
     return title.substring(0, title.length - 1)
   }
 
-  shouldComponentUpdate(nextState, nextProps)
-  {
-    if (nextState.indexSelected !== this.state.indexSelected)
-    {
-      return true
-    }
-    return false
-  }
-
   handleClick(regions)
   {
     this.props.selectRegion(regions)
@@ -124,7 +167,7 @@ class BodyRegionSelection extends React.Component {
       let index = --prevState.indexSelected
       if (index < 0)
       {
-        index = this.state.regions.length
+        index = this.state.regions.length-1
       }
       return {
         indexSelected: index,
@@ -152,58 +195,59 @@ class BodyRegionSelection extends React.Component {
     const lastTimeFormatted = lastTime.substring(0, lastTime.length - 3)
     const fontColor = {color: "white"};
     return (
-      <ImageBackground source={Images["gradient-gray"]} style={styles.mainView}>
+        <ImageBackground source={Images["gradient-gray"]} style={styles.mainView}>
 
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="#6a51ae"
-        />
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor="#6a51ae"
+          />
 
-        <View style={styles.titleView}>
-          <Text style={styles.titleText}>{ this.state.title }</Text>
-        </View>
+          <View style={styles.titleView}>
+            <Text style={styles.titleText}>{ this.state.title }</Text>
+          </View>
 
-        <View style={{flexDirection: "row", width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10}}>
-          {this.renderIcons()}
-        </View>
+          <View style={{flexDirection: "row", width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10}} {...this._panResponder.panHandlers}>
+            {this.renderIcons()}
+          </View>
 
-        <View style={{width: "100%", justifyContent: "center", alignItems: "center", marginTop: 50}}>
-          <PaginationIndicator amount={3} indexSelected={this.state.indexSelected}
-                               style={{justifyContent: "center", alignItems: "center"}}/>
-        </View>
+          <View style={{width: "100%", justifyContent: "center", alignItems: "center", marginTop: 50}}>
+            <PaginationIndicator amount={3} indexSelected={this.state.indexSelected}
+                                 style={{justifyContent: "center", alignItems: "center"}}/>
+          </View>
 
-        <View style={{width: "90%", height: 120, justifyContent: "space-between", marginTop: 80}}>
-          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
-            style={{fontSize: 18, ...fontColor}}>{ labelTotalWorkouts + ":" }</Text> <Text
-            style={{fontSize: 18, letterSpacing: 1, ...fontColor}}>{ totalWorkouts }</Text></View>
-          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
-            style={{fontSize: 18, ...fontColor}}>{ labelLastWorkoutTime + ":" }</Text> <Text
-            style={{fontSize: 18, letterSpacing: 1, ...fontColor}}>{ lastTimeFormatted }</Text></View>
-          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
-            style={{fontSize: 18, ...fontColor}}>{ labelAverageTime + ":" }</Text> <Text
-            style={{fontSize: 18, letterSpacing: 1, ...fontColor}}>{ averageTimeFormatted }</Text></View>
-        </View>
+          <View style={{width: "90%", height: 120, justifyContent: "space-between", marginTop: 80}}>
+            <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
+              style={{fontSize: 18, ...fontColor}}>{ labelTotalWorkouts + ":" }</Text> <Text
+              style={{fontSize: 18, letterSpacing: 1, ...fontColor}}>{ totalWorkouts }</Text></View>
+            <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
+              style={{fontSize: 18, ...fontColor}}>{ labelLastWorkoutTime + ":" }</Text> <Text
+              style={{fontSize: 18, letterSpacing: 1, ...fontColor}}>{ lastTimeFormatted }</Text></View>
+            <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}><Text
+              style={{fontSize: 18, ...fontColor}}>{ labelAverageTime + ":" }</Text> <Text
+              style={{fontSize: 18, letterSpacing: 1, ...fontColor}}>{ averageTimeFormatted }</Text></View>
+          </View>
 
-        <View style={{width: "90%", marginTop: 55}}>
-          <Button text={labelStartWorkout}
-                  backgroundColor={"rgb(73, 73, 73)"}
-                  color={"white"}
-                  padding={16}
-                  borderRadius={10}
-                  borderColor={"rgb(86, 86, 86)"}
-                  borderWidth={0}
-                  fontSize={18}
-                  fontWeight={"bold"}
-                  onPress={() => this.handleClick(selectedRegions)} />
-        </View>
+          <View style={{width: "90%", marginTop: 55}}>
+            <Button text={labelStartWorkout}
+                    backgroundColor={"rgb(73, 73, 73)"}
+                    color={"white"}
+                    padding={16}
+                    borderRadius={10}
+                    borderColor={"rgb(86, 86, 86)"}
+                    borderWidth={0}
+                    fontSize={18}
+                    fontWeight={"bold"}
+                    onPress={() => this.handleClick(selectedRegions)} />
+          </View>
 
-      </ImageBackground>
+        </ImageBackground>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
   lrc:           state.language.lrc,
+  selectedLanguage: state.language.selectedLanguage,
   stopwatchTime: state.exercises.stopwatchTime,
   stack: state.exercises.stack,
   store: state.editExercise.store

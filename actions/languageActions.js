@@ -4,5 +4,5 @@ import Lrc from "../components/Lrc"
 
 export const selectLanguage = (lang) => ({
   type: SELECT_LANGUAGE,
-  payload: Lrc[lang]
+  payload: lang
 })

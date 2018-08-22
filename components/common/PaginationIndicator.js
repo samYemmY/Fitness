@@ -18,7 +18,7 @@ class PaginationIndicator extends React.Component
     let {amount, indexSelected} = this.props
     for(let i = 0; i < amount; i++)
     {
-      let selected = i === indexSelected
+      let selected = i === indexSelected;
       points.push(<Point width={7} height={7} selected={selected} key={i}/>)
     }
     return (

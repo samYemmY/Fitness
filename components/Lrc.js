@@ -35,6 +35,9 @@ export default {
       labelSelectRegion: "Body Region",
       labelExerciseName: "Exercise Name",
       labelNavBar: "Add Exercise"
+    },
+    Settings: {
+      labelSelectLanguage: "Select Language"
     }
   },
   de: {
@@ -73,6 +76,9 @@ export default {
       labelSelectRegion: "Körperregion",
       labelExerciseName: "Übungsname",
       labelNavBar: "Übung hinzufügen"
+    },
+    Settings: {
+      labelSelectLanguage: "Sprache Auswählen"
     }
   }
 }

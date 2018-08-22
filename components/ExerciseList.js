@@ -193,7 +193,9 @@ class ExerciseList extends React.Component {
     for (let region of actionProps.selectedRegions)
     {
       let sectionData = {...actionProps.stack[region], data: Object.keys(actionProps.stack[region].data)}
-      sections.push({...sectionData, title: actionProps.lrc.BodyRegionSelection[region], regionKey: region})
+      let title = actionProps.lrc.BodyRegionSelection[region];
+      title = title.charAt(0).toUpperCase() + title.substring(1);
+      sections.push({...sectionData, title: title, regionKey: region})
     }
     return sections
   }
@@ -204,7 +206,9 @@ class ExerciseList extends React.Component {
     let title                    = ""
     for (let region of selectedRegions)
     {
-      title += lrc.BodyRegionSelection[region] + " - "
+      let lrcTitle = lrc.BodyRegionSelection[region];
+      lrcTitle = lrcTitle.charAt(0).toUpperCase() + lrcTitle.substring(1);
+      title += lrcTitle + " - "
     }
     this.props.navigation.setParams({title: title.substring(0, title.length - 3)})
   }

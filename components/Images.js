@@ -26,5 +26,6 @@ export default {
   minus: require("../img/minus.png"),
   hantel: require("../img/hantel.png"),
   background: require("../img/background.png"),
-  "gradient-gray": require("../img/gradient-gray.png")
+  "gradient-gray": require("../img/gradient-gray.png"),
+  settings: require("../img/settings.png")
 }

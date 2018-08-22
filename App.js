@@ -1,3 +1,4 @@
+import {initProto} from "./components/Proto"
 import React, {Component} from 'react';
 import {
   Text,
@@ -15,6 +16,7 @@ import ModalAddExercise  from "./components/ModalAddExercise"
 import BodyRegionSelection from "./components/BodyRegionSelection"
 import ExerciseList from "./components/ExerciseList"
 import EditExercise from "./components/EditExercise"
+import Settings from "./components/Settings"
 import {Color} from "./components/Color"
 import {createStackNavigator} from 'react-navigation';
 
@@ -39,6 +41,12 @@ const RootStack = createStackNavigator({
   },
   ModalAddExercise: {
     screen: ModalAddExercise,
+    navigationOptions: {
+      headerBackTitle: " "
+    }
+  },
+  Settings: {
+    screen: Settings,
     navigationOptions: {
       headerBackTitle: " "
     }
@@ -67,7 +75,8 @@ export default class App extends Component<Props> {
 
   constructor(props)
   {
-    super(props)
+    super(props);
+    initProto();
     this.state = {
       isStoreLoading: false,
       store:          store,

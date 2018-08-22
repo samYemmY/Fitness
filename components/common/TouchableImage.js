@@ -2,13 +2,14 @@ import React, {Component} from "react";
 import {TouchableOpacity, View, StyleSheet, Dimensions, Image} from "react-native";
 
 
-const TouchableImage = ({onPress, source, width, height, top, left, position, style}) => {
+const TouchableImage = ({onPress, source, width, height, top, left, position, style, imageStyle}) => {
   const styles = StyleSheet.create({
     image: {
       width:  width,
       height: height,
       top: top,
-      left: left
+      left: left,
+      ...imageStyle
     }
   });
 
