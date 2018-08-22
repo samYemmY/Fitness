@@ -120,16 +120,14 @@ class ModalAddExercise extends React.Component
           </View>
 
           <View style={{width: "100%", alignItems: "center", marginTop: 20}}>
-            <View style={{width: "90%"}}>
+            <View style={{width: "100%"}}>
               <Button
                       text={lrc.save}
-                      backgroundColor={"rgb(73, 73, 73)"}
+                      backgroundColor={"black"}
                       color={"white"}
                       padding={16}
                       borderRadius={10}
-                      borderColor={"rgb(86, 86, 86)"}
-                      borderWidth={0}
-                      fontSize={18}
+                      fontSize={21}
                       onPress={this.onSave.bind(this)}
               />
             </View>

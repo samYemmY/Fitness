@@ -109,7 +109,7 @@ class EditExercise extends React.Component {
     const {weight, reps, sets, selectedExercise} = this.state
     const {lrc} = this.props
     return (
-      <View style={{padding: 20, backgroundColor: "white"}}>
+      <View style={{padding: 20, backgroundColor: "white", height: "100%"}}>
         <View style={{
           flexDirection:  "row",
           justifyContent: "center",
@@ -176,20 +176,16 @@ class EditExercise extends React.Component {
           </View>
       </View>
 
-        <View style={{alignItems: "center", width: "100%", marginTop: 38}}>
-          <View style={{width: "90%"}}>
+        <View style={{width: "100%", marginTop: 38}}>
             <Button
               text={lrc.save}
               onPress={this.saveValues.bind(this)}
-              backgroundColor={"rgb(73, 73, 73)"}
+              backgroundColor={"black"}
               color={"white"}
               padding={16}
               borderRadius={10}
-              borderColor={"rgb(86, 86, 86)"}
-              borderWidth={0}
-              fontSize={18}
+              fontSize={21}
             />
-          </View>
         </View>
       </View>
     )

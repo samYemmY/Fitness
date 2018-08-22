@@ -100,6 +100,7 @@ class ExerciseList extends React.Component {
     this.setState({
       sections
     })
+    this.resetState()
   }
 
   componentWillUnmount()
