@@ -177,8 +177,18 @@ class EditExercise extends React.Component {
       </View>
 
         <View style={{alignItems: "center", width: "100%", marginTop: 38}}>
-          <View style={{width: "100%", height: 120}}>
-            <Button text={lrc.save} onPress={this.saveValues.bind(this)} backgroundColor={"black"} color={"white"} padding={16} borderRadius={10} fontSize={21} fontWeight={"bold"}/>
+          <View style={{width: "90%"}}>
+            <Button
+              text={lrc.save}
+              onPress={this.saveValues.bind(this)}
+              backgroundColor={"rgb(73, 73, 73)"}
+              color={"white"}
+              padding={16}
+              borderRadius={10}
+              borderColor={"rgb(86, 86, 86)"}
+              borderWidth={0}
+              fontSize={18}
+            />
           </View>
         </View>
       </View>

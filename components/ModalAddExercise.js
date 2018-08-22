@@ -89,7 +89,7 @@ class ModalAddExercise extends React.Component
             <TextInput style={{ fontSize }} placeholder={lrc.benchPress} onChangeText={(text) => this.changeValue("name", text)} defaultValue={"Test"}/>
           </View>
 
-          <View style={{ marginTop: 30}}>
+          <View style={{ marginTop: 0}}>
             <Text style={{ fontSize, marginTop: 30, fontFamily: "Lato-Black" }}>{lrc.initialValues}</Text>
           </View>
 
@@ -119,14 +119,20 @@ class ModalAddExercise extends React.Component
             </View>
           </View>
 
-          <View style={{width: "100%", marginTop: 5}}>
-            <Button text={lrc.save}
-                    backgroundColor={"black"}
-                    color={"white"}
-                    padding={16}
-                    borderRadius={10}
-                    fontSize={21}
-                    onPress={this.onSave.bind(this)} />
+          <View style={{width: "100%", alignItems: "center", marginTop: 20}}>
+            <View style={{width: "90%"}}>
+              <Button
+                      text={lrc.save}
+                      backgroundColor={"rgb(73, 73, 73)"}
+                      color={"white"}
+                      padding={16}
+                      borderRadius={10}
+                      borderColor={"rgb(86, 86, 86)"}
+                      borderWidth={0}
+                      fontSize={18}
+                      onPress={this.onSave.bind(this)}
+              />
+            </View>
           </View>
 
         </View>
